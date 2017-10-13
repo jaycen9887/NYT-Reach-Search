@@ -28,28 +28,46 @@ class ArticleScrape extends Component {
   
 
   handleQuery = (numRecords, url) => {
-    return axios.get(url)
-      .then(data => {
-        console.log(data.data.response.docs);
-        for(let i = 0; i < this.state.numRecords; i++){
-          let temp = {
-            headline: "Headline Unavailable",
-            biline: "Biline Unavailable",
-            pub_date: data.data.response.docs[i].pub_date,
-            section_name: data.data.response.docs[i].section_name,
-            url: data.data.response.docs[i].web_url
-          }
-          if(data.data.response.docs[i].headline !== "null"){
-            temp.headline = data.data.response.docs[i].headline.main;
-          }
-          if(data.data.response.docs[i].byline && data.data.response.docs[i].byline.hasOwnProperty("original")){
-            temp.biline = data.data.response.docs[i].byline.original;
-          }
-          this.state.articles.push(temp);
-        } 
-      });
+    // return axios.get(url)
+    //   .then(data => {
+    //     console.log(data.data.response.docs);
+    //     for(let i = 0; i < this.state.numRecords; i++){
+    //       let temp = {
+    //         headline: "Headline Unavailable",
+    //         biline: "Biline Unavailable",
+    //         pub_date: data.data.response.docs[i].pub_date,
+    //         section_name: data.data.response.docs[i].section_name,
+    //         url: data.data.response.docs[i].web_url
+    //       }
+    //       if(data.data.response.docs[i].headline !== "null"){
+    //         temp.headline = data.data.response.docs[i].headline.main;
+    //       }
+    //       if(data.data.response.docs[i].byline && data.data.response.docs[i].byline.hasOwnProperty("original")){
+    //         temp.biline = data.data.response.docs[i].byline.original;
+    //       }
+    //       this.state.articles.push(temp);
+    //       thid.setState({
+
+    //       })
+    //     } 
+    //   }).then(
+        
+    //   )
       //Div = this.handleOutput();
 //console.log(this.handleOutput());
+    var myArray = [
+      {
+        id: 2,
+        title: "sbc"
+      },
+      {
+        id: 3,
+        title: "eeee"
+      }
+    ];
+    this.setState({
+      articles: myArray
+    });
   }
 
   handleOutput = () => {
@@ -186,7 +204,7 @@ class ArticleScrape extends Component {
               </div>
           </div>  
         </div>
-        <Results onChange={this.handleInputChange}/>
+        <Results articles={this.state.articles}/>
         <Saved />
       </div>
     );
