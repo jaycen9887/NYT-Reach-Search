@@ -1,0 +1,8 @@
+{
+    "short_name": "NYT Scrape",
+    "name": "New York Times: Scrape React App",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+  }
