@@ -4,7 +4,7 @@ import React, { Component } from "react";
 
 import Jumbotron from '../../components/Jumbotron';
 import Results from '../../components/Results';
-import Saved from '../../components/Saved';
+/* import Saved from '../../components/Saved'; */
 //import Search from '../../components/Search';
 //import DeleteBtn from "../../components/DeleteBtn";
 import {Input, FormBtn, Select} from '../../components/Form';
@@ -28,34 +28,44 @@ class ArticleScrape extends Component {
   
 
   handleQuery = (numRecords, url) => {
-    // return axios.get(url)
-    //   .then(data => {
-    //     console.log(data.data.response.docs);
-    //     for(let i = 0; i < this.state.numRecords; i++){
-    //       let temp = {
-    //         headline: "Headline Unavailable",
-    //         biline: "Biline Unavailable",
-    //         pub_date: data.data.response.docs[i].pub_date,
-    //         section_name: data.data.response.docs[i].section_name,
-    //         url: data.data.response.docs[i].web_url
-    //       }
-    //       if(data.data.response.docs[i].headline !== "null"){
-    //         temp.headline = data.data.response.docs[i].headline.main;
-    //       }
-    //       if(data.data.response.docs[i].byline && data.data.response.docs[i].byline.hasOwnProperty("original")){
-    //         temp.biline = data.data.response.docs[i].byline.original;
-    //       }
-    //       this.state.articles.push(temp);
-    //       thid.setState({
+    let art = [];
+    return axios.get(url)
+      .then(data => {
+       // console.log(data.data.response.docs);
+        for(let i = 0; i < this.state.numRecords; i++){
+          let temp = {
+            id: i,
+            headline: "Headline Unavailable",
+            biline: "Biline Unavailable",
+            pub_date: data.data.response.docs[i].pub_date,
+            section_name: data.data.response.docs[i].section_name,
+            url: data.data.response.docs[i].web_url,
+            snippet: "Snippet Unavailable"
+          }
+          if(data.data.response.docs[i].headline !== "null"){
+            temp.headline = data.data.response.docs[i].headline.main;
+          }
+          if(data.data.response.docs[i].byline && data.data.response.docs[i].byline.hasOwnProperty("original")){
+            temp.biline = data.data.response.docs[i].byline.original;
+         }
+         if(data.data.response.docs[i].snippet){
+           temp.snippet = data.data.response.docs[i].snippet;
+         } 
 
-    //       })
-    //     } 
-    //   }).then(
-        
-    //   )
-      //Div = this.handleOutput();
-//console.log(this.handleOutput());
-    var myArray = [
+
+          art.push(temp);
+        }
+
+        this.setState({
+          articles: art
+        });
+
+        /* console.log("*****************************************");
+        console.log(this.state.articles);
+        console.log("*****************************************"); */
+
+      });
+    /* var myArray = [
       {
         id: 2,
         title: "sbc"
@@ -67,11 +77,11 @@ class ArticleScrape extends Component {
     ];
     this.setState({
       articles: myArray
-    });
+    }); */
   }
 
   handleOutput = () => {
-    console.log('Output');
+    /* console.log('Output'); */
     return (
       <div>
         {this.state.articles.map((article) => {
@@ -205,7 +215,6 @@ class ArticleScrape extends Component {
           </div>  
         </div>
         <Results articles={this.state.articles}/>
-        <Saved />
       </div>
     );
   }
